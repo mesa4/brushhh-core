@@ -26,7 +26,9 @@ class RemoteImage {
 
 class RemoteElement {
 	constructor({type, content = {}, styles = {}, attributes = {}}) {
-		this.element = this.createElementByType(type)
+		this.type = type;
+		this.content = content;
+		this.element = this.createElementByType();
 		this.styles = styles;
 		this.attributes = attributes;
 
@@ -34,13 +36,13 @@ class RemoteElement {
 		this.initAttributes();
 	}
 
-	createElementByType(type) {
+	createElementByType() {
 		const elementTypeMap = {
 			TEXT: RemoteText,
 			IMAGE: RemoteImage
 		};
 
-		return new elementTypeMap[type]
+		return new elementTypeMap[this.type](this.content).getElement();
 	}
 
 	initStyles() {
